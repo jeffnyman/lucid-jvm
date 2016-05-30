@@ -1,0 +1,48 @@
+group 'com.testerstories.testing'
+version '1.0-SNAPSHOT'
+description 'Sample Project for Lucid Testing on the JVM'
+
+apply plugin: 'idea'
+apply plugin: 'eclipse'
+
+apply plugin: 'java'
+apply plugin: 'groovy'
+apply plugin: 'scala'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+def groovyVersion = '2.4.6'
+def scalaVersion = '2.11.8'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: "$groovyVersion"
+    compile group: 'org.scala-lang', name: 'scala-library', version: "$scalaVersion"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.testng', name: 'testng', version: '6.9.10'
+    testCompile group: 'org.specs2', name: 'specs2-core_2.11', version: '3.8.3'
+    testCompile group: 'org.specs2', name: 'specs2-junit_2.11', version: '3.8.3'
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.13'
+}
+
+task testng(type: Test) {
+    ignoreFailures = true
+    useTestNG() {
+        suites("src/test/resources/testng.xml")
+    }
+}
+
+task testReport(type: TestReport) {
+    destinationDir = file("$buildDir/reports/allTests")
+    reportOn test
+    reportOn testng
+}
+
+check.dependsOn testReport

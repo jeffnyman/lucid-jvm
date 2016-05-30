@@ -1,0 +1,23 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite1" verbose="1">
+    <listeners>
+        <listener class-name="org.testng.reporters.EmailableReporter"/>
+    </listeners>
+    <test name="Smoke Test">
+        <groups>
+            <run>
+                <exclude name="Integration"/>
+                <include name="Smoke"/>
+            </run>
+        </groups>
+
+        <classes>
+            <class name="com.testerstories.testing.unit.HashTest">
+            </class>
+            <class name="com.testerstories.testing.qotd.GroovyQotdServiceTest">
+            </class>
+            <class name="com.testerstories.testing.qotd.ScalaQotdServiceTest">
+            </class>
+        </classes>
+    </test>
+</suite>
