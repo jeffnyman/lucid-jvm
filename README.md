@@ -20,7 +20,7 @@ The Gradle Wrapper consists of a `gradlew` shell script (for Linux/Mac), a `grad
 
 To use it, just call the wrapper script based on your OS:
 
-* On Mac OS X/Linux: `./gradlew taskName`
+* On Mac OS/Linux: `./gradlew taskName`
 * On Windows: `gradlew taskName`
 
 ### Plugins
@@ -55,4 +55,17 @@ Currently there are three execution modes that make sense to try:
 * `gradle clean testng`
 * `gradle clean testReport`
 
-The first will only execute JUnit based tests, which mean the Scala-based Qotd service tests. The second will execute all TestNG tasks. Do note that there is a `testng.xml` file in place which further constrains the test parameters. Note that if these two tasks are run together, their test report output will overwrite each other. The third will execute both `test` and `testng` but will make sure that both reports (from JUnit and TestNG) are combined in the final output.
+The first command will only execute JUnit based tests, which means the Scala-based Qotd service tests. The second command will execute all TestNG tasks. Note that if these two tasks are run together, their test report output will overwrite each other. The third command will execute both `test` and `testng` but will make sure that both reports (from JUnit and TestNG) are combined in the final output. JUnit and TestNG on their own generate completely different report formats, but Gradle nicely reconciles them into a standard look and feel.
+
+The following locations provide the report output for the given task:
+
+* testReport: `build/reports/allTests/index.html`
+* test / testng: `build/reports/tests/index.html`
+
+A report suitable for emailing is generated in the following location: `build/reports/tests/emailable-report.html`. Note that, currently, the emailable report does not combine JUnit and TestNG runs.
+
+### Test Configuration
+
+A file called `testng.xml` is a configuration file for TestNG. It's used to define test suites and tests as well as pass parameters to test methods.
+
+Originally I was using this file for my test configuration but my dislike of XML in general led me to start using the `testng` task in my Gradle build file for the same purpose. I'm not sure if I can do everything in the build file that I can with the TestNG XML configuration file, but I'm going to try. I've found that you can use the [Gradle test filter](https://docs.gradle.org/current/javadoc/org/gradle/api/tasks/testing/TestFilter.html) if need be.

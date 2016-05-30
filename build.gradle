@@ -35,7 +35,9 @@ task wrapper(type: Wrapper) {
 task testng(type: Test) {
     ignoreFailures = true
     useTestNG() {
-        suites("src/test/resources/testng.xml")
+        includeGroups 'Smoke'
+        excludeGroups 'Integration'
+        listeners << 'org.testng.reporters.EmailableReporter'
     }
 }
 
