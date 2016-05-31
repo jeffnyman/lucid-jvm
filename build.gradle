@@ -2,6 +2,8 @@ group 'com.testerstories.testing'
 version '1.0-SNAPSHOT'
 description 'Sample Project for Lucid Testing on the JVM'
 
+defaultTasks 'clean', 'testReport'
+
 apply plugin: 'idea'
 apply plugin: 'eclipse'
 
@@ -47,4 +49,12 @@ task testReport(type: TestReport) {
     reportOn testng
 }
 
-check.dependsOn testReport
+task testReportJUnit(type: TestReport) {
+    destinationDir = file("$buildDir/reports/tests/junit")
+    reportOn test
+}
+
+task testReportTestNG(type: TestReport) {
+    destinationDir = file("$buildDir/reports/tests/testng")
+    reportOn testng
+}
