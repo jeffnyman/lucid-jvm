@@ -51,6 +51,8 @@ Note that the preceding are a contrived example -- and one that I borrowed in pi
 
 There are a series of JUnit and TestNG unit tests, written for both Java (`JUnitDemoTest`, `TestNGDemoTest`) and Groovy (`JUnitDemoGroovyTest`, `TestNGDemoGroovyTest`). These are in place so that I can continue to experiment with reporting as well as making sure that all execution remains the same across JVM languages. I'm currently putting much less emphasis on Scala and no emphasis at all on Clojure.
 
+I have included some generic Spock material, in the form of a test (`SpockBasicTest`) and a spec (`SpockBasicSpec`). These are executed by JUnit and it's not clear to me how to effectively run them via TestNG.
+
 ## Execution
 
 Currently there are two execution modes that make sense to try:
@@ -90,6 +92,8 @@ The following locations provide the report output for each given task:
 * testReportTestNG: `build/reports/tests/testng/index.html`
 
 A report suitable for emailing is generated in the following location: `build/reports/tests/emailable-report.html`. Note that, currently, the emailable report does not combine JUnit and TestNG runs. I'm not convinced of the useful of this report anyway but wanted to explore my reporting options as well as my execution parameters.
+
+I haven't played around with any of this for use with continuous integration yet so I have no idea how well these reports can be generated and synced up via such a system.
 
 ### Test Configuration
 
