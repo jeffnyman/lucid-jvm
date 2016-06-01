@@ -29,6 +29,7 @@ dependencies {
     testCompile group: 'org.spockframework', name: 'spock-core', version: '1.0-groovy-2.4'
     testCompile group: 'org.specs2', name: 'specs2-core_2.11', version: '3.8.3'
     testCompile group: 'org.specs2', name: 'specs2-junit_2.11', version: '3.8.3'
+    testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.+'
 }
 
 task wrapper(type: Wrapper) {
@@ -38,8 +39,8 @@ task wrapper(type: Wrapper) {
 task testng(type: Test) {
     ignoreFailures = true
     useTestNG() {
-        includeGroups 'Smoke'
-        excludeGroups 'Integration'
+        //includeGroups 'Smoke'
+        //excludeGroups 'Integration'
         listeners << 'org.testng.reporters.EmailableReporter'
     }
 }

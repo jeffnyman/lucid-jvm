@@ -2,6 +2,12 @@
 
 The goal of this repository is to provide a focused example regarding "lucid testing" on the JVM. I will use this read me file as an initial capture of material related to creation. Eventually it will be cleaned up as the repository evolves into a more stable state.
 
+## Notes
+
+With the sixth commit, I believe I see some of the changes on the horizon. My focus is definitely going to be on Gradle and likely using TestNG _and_ JUnit, mainly so that I can leverage different test frameworks. Right now that comes down to leveraging Spock and Geb (with Spock relying on JUnit) and then everything else being executed under TestNG. All of this becomes interesting because it makes me consider how I might structure the execution logic for the tests as well as the reporting.
+
+***
+
 ## Polyglot Approach
 
 One of my initial goals in setting up this repository was to leverage the power of the JVM. I wanted to try using multiple languages in the same project and then use Gradle to orchestrate the build for the entire project. I wanted to use Gradle because I prefer its approach to that of the XML of Maven.
@@ -52,6 +58,14 @@ Note that the preceding are a contrived example -- and one that I borrowed in pi
 There are a series of JUnit and TestNG unit tests, written for both Java (`JUnitDemoTest`, `TestNGDemoTest`) and Groovy (`JUnitDemoGroovyTest`, `TestNGDemoGroovyTest`). These are in place so that I can continue to experiment with reporting as well as making sure that all execution remains the same across JVM languages. I'm currently putting much less emphasis on Scala and no emphasis at all on Clojure.
 
 I have included some generic Spock material, in the form of a test (`SpockBasicTest`) and two specs (`SpockBasicSpec`, `LifecycleSpec`). These are executed by JUnit and it's not clear to me how to effectively run them via TestNG. I also have a text adventure parser application written in Java (`Parser`, `Command`) that is tested via Spock and Groovy (`ParserActionsSpec`, `ParserSpec`).
+
+### Web-Based Testing
+
+I have a very simple WebDriver-based test (`SimpleWebTest`). Anything that is focused on browser-based execution will be executed with TestNG, largely so that I can gain the possible benefit of using groups, which JUnit still has some issues with.
+
+As part of testing out web-based solutions, I will be using a miniature Sinatra application I wrote called Decohere. This application can be run remotely by grabbing it from the [Decohere Github repo](https://github.com/jnyman/decohere) or can be run remotely via the [Decohere Heroku app](https://decohere.herokuapp.com/). Using the repo requires you downloading it and having a Ruby environment in which to run it. But it does make it a lot easier to test things out with.
+
+I'll also be periodically using the [representative internet examples app](http://the-internet.herokuapp.com/) to test my logic against common web-based technology implementations. 
 
 ## Execution
 
