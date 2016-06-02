@@ -49,7 +49,7 @@ All this being said, using tools like Spock seems to be a bit easier if you use 
 
 ## Sample Logic
 
-I have a `HashTest` that is being used to do nothing more than a simple unit test written in Java, executed by TestNG.
+I have a `HashTest`ary that is being used to do nothing more than a simple unit test written in Java, executed by TestNG.
 
 I also have a Groovy service (`GroovyQotdServiceTest`) and a Scala service (`ScalaQotdServiceTest`). Both of those are used to interface with a Java service (`QotdService`). There are unit tests for the Groovy (`GroovyQotdServiceTest`) and Scala (`ScalaQotdServiceTest`) implementations. Of particular note, the Groovy test uses TestNG, but the Scala test must use JUnit. However, the reports from the two are combined (using a the `testReport` task). All of this was done to show the interoperation between JVM languages.
 
@@ -61,11 +61,15 @@ I have included some generic Spock material, in the form of a test (`SpockBasicT
 
 ### Web-Based Testing
 
-I have a very simple WebDriver-based test (`SimpleWebTest`). Anything that is focused on browser-based execution will be executed with TestNG, largely so that I can gain the possible benefit of using groups, which JUnit still has some issues with.
+Anything that is focused on browser-based execution will be executed with TestNG, largely so that I can gain the possible benefit of using groups, which JUnit still has some issues with.
 
 As part of testing out web-based solutions, I will be using a miniature Sinatra application I wrote called Decohere. This application can be run remotely by grabbing it from the [Decohere Github repo](https://github.com/jnyman/decohere) or can be run remotely via the [Decohere Heroku app](https://decohere.herokuapp.com/). Using the repo requires you downloading it and having a Ruby environment in which to run it. But it does make it a lot easier to test things out with.
 
-I'll also be periodically using the [representative internet examples app](http://the-internet.herokuapp.com/) to test my logic against common web-based technology implementations. 
+I'll also be periodically using the [representative internet examples app](http://the-internet.herokuapp.com/) to test my logic against common web-based technology implementations.
+
+I will be using the AssertJ as my assertion library. A lot of people seem to like Hamcrest, which is a declarative rule based object matcher framework. But the [core features](http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html) of AssertJ won me over. The library basically uses a factory method (`Assertions.assertThat()`) to create a type specific assertion. The type specific assertions offer fluent interfaces that are largely polymorphic.
+
+I have a simple test of logging in for bot the Internet Examples (`InternetLoginTest`) and my Decohere login (`DecohereLoginTest`). I also have a test for my "weight on other planets" page (`PlanetWeightTest`). Currently I have a factory class (`DriverFactory`) that each test class extends to remove as much of the WebDriver logic as possible from the test logic.
 
 ## Execution
 
