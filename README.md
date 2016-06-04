@@ -69,7 +69,13 @@ I'll also be periodically using the [representative internet examples app](http:
 
 I will be using the AssertJ as my assertion library. A lot of people seem to like Hamcrest, which is a declarative rule based object matcher framework. But the [core features](http://joel-costigliola.github.io/assertj/assertj-core-features-highlight.html) of AssertJ won me over. The library basically uses a factory method (`Assertions.assertThat()`) to create a type specific assertion. The type specific assertions offer fluent interfaces that are largely polymorphic.
 
-I have a simple test of logging in for bot the Internet Examples (`InternetLoginTest`) and my Decohere login (`DecohereLoginTest`). I also have a test for my "weight on other planets" page (`PlanetWeightTest`). Currently I have a factory class (`DriverFactory`) that each test class extends to remove as much of the WebDriver logic as possible from the test logic.
+I have a simple test of logging in for bot the Internet Examples (`InternetLoginTest`) and my Decohere login (`DecohereLoginTest`). I also have a test for my "weight on other planets" page (`PlanetWeightTest`).
+
+I don't want the logic for calling up a specific browser driver (like FirefoxDriver) in all of the tests, I also don't want it in the DriverFactory either. I want each driver type to be able to start up its own driver. But I don't necessarily know what drivers are going to be needed since that will be up to the user. So a class (`DriverType`) has to be used to manage these types. This management requires a certain set of methods and in order to ensure consistency of approach. As such it seems logical to have a `DriverType` class implement an interface (`DriverSetup`) to guarantee uniform implementation.
+
+The basic enum `DriverType` allows you to choose one of the default browsers supported by Selenium. Each enum entry implements a `getDesiredCapabilities()` method and a `getWebDriver()` method. This allows you to get a default set of capabilities for each browser. These capabilities can be extended, if required. These desired capabilities can then be used to instantiate a new WebDriver object when calling the `getWebDriver()` method.
+
+I use a [WebDriver Manager](https://github.com/bonigarcia/webdrivermanager) here. What this does is allow for the automatic downloading of browser drivers.
 
 ## Execution
 

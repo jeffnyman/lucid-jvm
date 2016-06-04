@@ -31,6 +31,8 @@ dependencies {
     testCompile group: 'org.specs2', name: 'specs2-core_2.11', version: '3.8.3'
     testCompile group: 'org.specs2', name: 'specs2-junit_2.11', version: '3.8.3'
     testCompile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '2.+'
+    testCompile group: 'io.github.bonigarcia', name: 'webdrivermanager', version: '1.4+'
+    testCompile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7+'
 }
 
 task wrapper(type: Wrapper) {
@@ -44,6 +46,14 @@ task testng(type: Test) {
         //excludeGroups 'Integration'
         listeners << 'org.testng.reporters.EmailableReporter'
     }
+
+    testLogging {
+        showStandardStreams = true
+    }
+
+    systemProperties = [
+            browser: System.getProperty('browser', 'firefox')
+    ]
 }
 
 task testReport(type: TestReport) {
