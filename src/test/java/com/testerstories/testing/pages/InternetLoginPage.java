@@ -1,21 +1,34 @@
 package com.testerstories.testing.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import com.testerstories.testing.config.DriverFactory;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class InternetLoginPage {
-    private static By username = By.id("username");
-    private static By password = By.id("password");
-    private static By login = By.tagName("button");
-    private static By alert = By.className("success");
+    @FindBy(id = "username")
+    private WebElement username;
 
-    public static void logInAs(String user, String pass, WebDriver driver) {
-        driver.findElement(username).sendKeys(user);
-        driver.findElement(password).sendKeys(pass);
-        driver.findElement(login).click();
+    @FindBy(id = "password")
+    private WebElement password;
+
+    @FindBy(tagName = "button")
+    private WebElement login;
+
+    @FindBy(className = "success")
+    private WebElement alert;
+
+    public InternetLoginPage() {
+        PageFactory.initElements(DriverFactory.getDriver(), this);
     }
 
-    public static String checkAlert(WebDriver driver) {
-        return driver.findElement(alert).getText();
+    public void logInAs(String user, String pass) {
+        username.sendKeys(user);
+        password.sendKeys(pass);
+        login.click();
+    }
+
+    public String checkAlert() {
+        return alert.getText();
     }
 }

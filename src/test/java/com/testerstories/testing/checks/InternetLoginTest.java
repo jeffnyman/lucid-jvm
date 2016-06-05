@@ -13,7 +13,9 @@ public class InternetLoginTest extends DriverFactory {
         WebDriver driver = DriverFactory.getDriver();
         driver.get("http://the-internet.herokuapp.com/login");
 
-        InternetLoginPage.logInAs("tomsmith", "SuperSecretPassword!", driver);
-        assertThat(InternetLoginPage.checkAlert(driver)).contains("You logged into a secure area!");
+        InternetLoginPage loginPage = new InternetLoginPage();
+
+        loginPage.logInAs("tomsmith", "SuperSecretPassword!");
+        assertThat(loginPage.checkAlert()).contains("You logged into a secure area!");
     }
 }

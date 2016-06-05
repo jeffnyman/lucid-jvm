@@ -1,24 +1,38 @@
 package com.testerstories.testing.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import com.testerstories.testing.config.DriverFactory;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class DecohereLoginPage {
-    private static By loginForm = By.id("openLogin");
-    private static By email = By.id("username");
-    private static By password = By.id("password");
-    private static By signIn = By.id("login");
-    private static By notice = By.className("notice");
+    @FindBy(id = "openLogin")
+    private WebElement loginForm;
 
-    public static void logInAs(String user, String pass, WebDriver driver) {
-        driver.findElement(loginForm).click();
-        driver.findElement(email).sendKeys(user);
-        driver.findElement(password).sendKeys(pass);
-        driver.findElement(signIn).click();
+    @FindBy(id = "username")
+    private WebElement email;
 
+    @FindBy(id = "password")
+    private WebElement password;
+
+    @FindBy(id = "login")
+    private WebElement signIn;
+
+    @FindBy(className = "notice")
+    private WebElement notice;
+
+    public DecohereLoginPage() {
+        PageFactory.initElements(DriverFactory.getDriver(), this);
     }
 
-    public static String checkMessage(WebDriver driver) {
-        return driver.findElement(notice).getText();
+    public void logInAs(String user, String pass) {
+        loginForm.click();
+        email.sendKeys(user);
+        password.sendKeys(pass);
+        signIn.click();
+    }
+
+    public String checkMessage() {
+        return notice.getText();
     }
 }

@@ -17,7 +17,7 @@ public class DriverFactory {
         driver = selectedDriver.getWebDriver(desiredCapabilities);
     }
 
-    protected static WebDriver getDriver() {
+    public static WebDriver getDriver() {
         return driver;
     }
 

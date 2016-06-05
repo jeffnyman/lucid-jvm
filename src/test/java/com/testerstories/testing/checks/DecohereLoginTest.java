@@ -13,7 +13,8 @@ public class DecohereLoginTest extends DriverFactory {
         WebDriver driver = DriverFactory.getDriver();
         driver.get("https://decohere.herokuapp.com/");
 
-        DecohereLoginPage.logInAs("admin@decohere.com", "admin", driver);
-        assertThat(DecohereLoginPage.checkMessage(driver)).isEqualTo("You are now logged in as admin@decohere.com.");
+        DecohereLoginPage loginPage = new DecohereLoginPage();
+        loginPage.logInAs("admin@decohere.com", "admin");
+        assertThat(loginPage.checkMessage()).isEqualTo("You are now logged in as admin@decohere.com.");
     }
 }

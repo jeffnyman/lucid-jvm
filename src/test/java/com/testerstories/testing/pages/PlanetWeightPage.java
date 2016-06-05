@@ -1,19 +1,30 @@
 package com.testerstories.testing.pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import com.testerstories.testing.config.DriverFactory;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 public class PlanetWeightPage {
-    private static By weight = By.id("wt");
-    private static By calculate = By.id("calculate");
-    private static By mercuryWeight = By.id("outputmrc");
+    @FindBy(id = "wt")
+    private WebElement weight;
 
-    public static void calculateMercuryWeight(String humanWeight, WebDriver driver) {
-        driver.findElement(weight).sendKeys(humanWeight);
-        driver.findElement(calculate).click();
+    @FindBy(id = "calculate")
+    private WebElement calculate;
+
+    @FindBy(id = "outputmrc")
+    private WebElement mercuryWeight;
+
+    public PlanetWeightPage() {
+        PageFactory.initElements(DriverFactory.getDriver(), this);
     }
 
-    public static String mercuryWeightValue(WebDriver driver) {
-        return driver.findElement(mercuryWeight).getAttribute("value");
+    public void calculateMercuryWeight(String humanWeight) {
+        weight.sendKeys(humanWeight);
+        calculate.click();
+    }
+
+    public String mercuryWeightValue() {
+        return mercuryWeight.getAttribute("value");
     }
 }
