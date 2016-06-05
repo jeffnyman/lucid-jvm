@@ -1,6 +1,7 @@
 package com.testerstories.testing.checks;
 
 import com.testerstories.testing.config.DriverFactory;
+import com.testerstories.testing.pages.PlanetWeightPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,13 +15,7 @@ public class PlanetWeightTest extends DriverFactory {
         WebDriver driver = DriverFactory.getDriver();
         driver.get("https://decohere.herokuapp.com/planets");
 
-        WebElement weight = driver.findElement(By.id("wt"));
-        weight.sendKeys("200");
-
-        WebElement calculate = driver.findElement(By.id("calculate"));
-        calculate.click();
-
-        WebElement mercury_weight = driver.findElement(By.id("outputmrc"));
-        assertThat(mercury_weight.getAttribute("value")).isEqualTo("75.6");
+        PlanetWeightPage.calculateMercuryWeight("200", driver);
+        assertThat(PlanetWeightPage.mercuryWeightValue(driver)).isEqualTo("75.6");
     }
 }
