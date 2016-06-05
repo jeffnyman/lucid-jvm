@@ -1,6 +1,7 @@
 package com.testerstories.testing.checks.decohere;
 
 import com.testerstories.testing.config.DriverFactory;
+import com.testerstories.testing.config.Setting;
 import com.testerstories.testing.pages.decohere.App;
 import com.testerstories.testing.pages.decohere.HomePage;
 import com.testerstories.testing.pages.decohere.LandingPage;
@@ -13,8 +14,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class PlanetWeightTest extends DriverFactory {
     @BeforeMethod
     public void setup() {
+        String domain = Setting.useSetting("domain");
         getDriver().manage().window().maximize();
-        getDriver().get("https://decohere.herokuapp.com/");
+        getDriver().get(domain);
 
         // Non-fluent approach
         /*

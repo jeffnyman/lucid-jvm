@@ -1,11 +1,15 @@
 package com.testerstories.testing.pages.decohere;
 
 import com.testerstories.testing.config.DriverFactory;
+import com.testerstories.testing.config.Setting;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 public class Authentication {
+    private static String admin_username = Setting.useSetting("decohere_admin_username");
+    private static String admin_password = Setting.useSetting("decohere_admin_password");
+
     @FindBy(id = "openLogin")
     private WebElement loginForm;
 
@@ -28,10 +32,10 @@ public class Authentication {
         PageFactory.initElements(DriverFactory.getDriver(), this);
     }
 
-    public void logInAs(String user, String pass) {
+    public void logInAsAdmin() {
         loginForm.click();
-        email.sendKeys(user);
-        password.sendKeys(pass);
+        email.sendKeys(admin_username);
+        password.sendKeys(admin_password);
         signIn.click();
     }
 
@@ -52,7 +56,7 @@ public class Authentication {
     }
 
     public void asAdmin() {
-        logInAs("admin@decohere.com", "admin");
+        logInAsAdmin();
     }
 
     private boolean isFormOpen() {

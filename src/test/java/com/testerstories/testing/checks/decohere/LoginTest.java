@@ -21,7 +21,7 @@ public class LoginTest extends DriverFactory {
     public void validLogin() {
         homePage = new HomePage();
         homePage.checkAvailable();
-        homePage.authentication.logInAs("admin@decohere.com", "admin");
+        homePage.authentication.logInAsAdmin();
 
         landingPage = new LandingPage();
         assertThat(landingPage.noticeMessage()).isEqualTo("You are now logged in as admin@decohere.com.");

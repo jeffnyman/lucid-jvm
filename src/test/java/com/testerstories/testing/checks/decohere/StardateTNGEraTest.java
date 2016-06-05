@@ -1,6 +1,7 @@
 package com.testerstories.testing.checks.decohere;
 
 import com.testerstories.testing.config.DriverFactory;
+import com.testerstories.testing.config.Setting;
 import com.testerstories.testing.pages.decohere.App;
 import com.testerstories.testing.pages.decohere.StardatePage;
 import org.testng.annotations.BeforeMethod;
@@ -11,9 +12,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class StardateTNGEraTest extends DriverFactory {
     @BeforeMethod
     public void setUp() {
-        getDriver().get("https://decohere.herokuapp.com/");
+        String domain = Setting.useSetting("domain");
         getDriver().manage().window().maximize();
         //getDriver().manage().window().setSize(new Dimension(1441, 900));
+        getDriver().get(domain);
 
         app = new App();
         app.login.asAdmin();
