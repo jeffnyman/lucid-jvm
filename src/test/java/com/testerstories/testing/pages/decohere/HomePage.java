@@ -1,6 +1,7 @@
 package com.testerstories.testing.pages.decohere;
 
 import com.testerstories.testing.config.DriverFactory;
+import com.testerstories.testing.helpers.Selenium;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -10,6 +11,8 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HomePage {
+    private Selenium selenium;
+
     @FindBy(id = "site-image")
     private WebElement testGorilla;
 
@@ -23,6 +26,7 @@ public class HomePage {
 
     public HomePage() {
         PageFactory.initElements(DriverFactory.getDriver(), this);
+        selenium = new Selenium(DriverFactory.getDriver());
     }
 
     public void checkAvailable() {
