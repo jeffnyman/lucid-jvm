@@ -1,5 +1,3 @@
-group 'com.testerstories.testing'
-version '1.0-SNAPSHOT'
 description 'Sample Project for Lucid Testing on the JVM'
 
 defaultTasks 'clean', 'testReport'

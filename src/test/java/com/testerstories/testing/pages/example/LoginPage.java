@@ -1,11 +1,11 @@
-package com.testerstories.testing.pages;
+package com.testerstories.testing.pages.example;
 
 import com.testerstories.testing.config.DriverFactory;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class InternetLoginPage {
+public class LoginPage {
     @FindBy(id = "username")
     private WebElement username;
 
@@ -18,7 +18,7 @@ public class InternetLoginPage {
     @FindBy(className = "success")
     private WebElement alert;
 
-    public InternetLoginPage() {
+    public LoginPage() {
         PageFactory.initElements(DriverFactory.getDriver(), this);
     }
 
