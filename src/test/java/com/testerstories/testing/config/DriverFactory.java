@@ -16,18 +16,20 @@ public class DriverFactory {
     private final String browser = System.getProperty("browser").toUpperCase();
     private final DriverType defaultDriver = DriverType.FIREFOX;
 
-    public void createDriver() {
-        selectedDriver = determineDriver();
-        DesiredCapabilities desiredCapabilities = selectedDriver.getDesiredCapabilities();
-        establishDriver(desiredCapabilities);
-    }
-
     public WebDriver getDriver() {
+        if (null == driver) {
+            selectedDriver = determineDriver();
+            DesiredCapabilities desiredCapabilities = selectedDriver.getDesiredCapabilities();
+            establishDriver(desiredCapabilities);
+
+        }
         return driver;
     }
 
     public void quitDriver() {
-        driver.quit();
+        if (null != driver) {
+            driver.quit();
+        }
     }
 
     private DriverType determineDriver() {

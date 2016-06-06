@@ -21,7 +21,6 @@ public class DriverBase {
     @BeforeMethod
     public static void createDriver() {
         driverFactory = new DriverFactory();
-        driverFactory.createDriver();
     }
 
     public static WebDriver getDriver() {
