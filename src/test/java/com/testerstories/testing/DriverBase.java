@@ -5,12 +5,17 @@ import com.testerstories.testing.listeners.ScreenshotListener;
 import com.testerstories.testing.pages.decohere.*;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Listeners;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Listeners(ScreenshotListener.class)
 public class DriverBase {
-    private static DriverFactory driverFactory;
+    private static ThreadLocal<DriverFactory> driverFactory;
+    private static List<DriverFactory> threadPool = Collections.synchronizedList(new ArrayList<DriverFactory>());
 
     protected App app;
     protected HomePage homePage;
@@ -18,17 +23,27 @@ public class DriverBase {
     protected PlanetWeightPage planetWeightPage;
     protected StardatePage stardatePage;
 
-    @BeforeMethod
+    @BeforeSuite(alwaysRun = true)
     public static void createDriver() {
-        driverFactory = new DriverFactory();
+        driverFactory = new ThreadLocal<DriverFactory>() {
+            @Override
+            protected DriverFactory initialValue() {
+                DriverFactory driverFactory = new DriverFactory();
+                threadPool.add(driverFactory);
+                return driverFactory;
+            }
+        };
     }
 
     public static WebDriver getDriver() {
-        return driverFactory.getDriver();
+        return driverFactory.get().getDriver();
     }
 
-    @AfterMethod
+    @AfterMethod(alwaysRun = true)
     public static void quitDriver() {
-        driverFactory.quitDriver();
+        getDriver().manage().deleteAllCookies();
+        for (DriverFactory driverFactory : threadPool) {
+            driverFactory.quitDriver();
+        }
     }
 }

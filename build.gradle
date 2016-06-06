@@ -57,6 +57,11 @@ task testng(type: Test) {
         //includeGroups 'Smoke'
         //excludeGroups 'Integration'
         listeners << 'org.testng.reporters.EmailableReporter'
+
+        options {
+            parallel = 'methods'
+            threadCount = System.getProperty('threads', '1') as int
+        }
     }
 
     testLogging {

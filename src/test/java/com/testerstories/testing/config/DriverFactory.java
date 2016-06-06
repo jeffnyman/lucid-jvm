@@ -44,6 +44,7 @@ public class DriverFactory {
     public void quitDriver() {
         if (null != driver) {
             driver.quit();
+            driver = null;
         }
     }
 
