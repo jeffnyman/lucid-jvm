@@ -1,17 +1,25 @@
 package com.testerstories.testing.config;
 
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class DriverFactory {
-    private static WebDriver driver;
-    private static final String browser = System.getProperty("browser").toUpperCase();
-    private static final DriverType defaultDriver = DriverType.FIREFOX;
+    private WebDriver driver;
+    private DriverType selectedDriver;
+
+    private final boolean useRemoteWebDriver = Boolean.getBoolean("remote");
+    private final String browser = System.getProperty("browser").toUpperCase();
+    private final DriverType defaultDriver = DriverType.FIREFOX;
 
     public void createDriver() {
-        DriverType selectedDriver = determineDriver();
+        selectedDriver = determineDriver();
         DesiredCapabilities desiredCapabilities = selectedDriver.getDesiredCapabilities();
-        driver = selectedDriver.getWebDriver(desiredCapabilities);
+        establishDriver(desiredCapabilities);
     }
 
     public WebDriver getDriver() {
@@ -22,7 +30,7 @@ public class DriverFactory {
         driver.quit();
     }
 
-    private static DriverType determineDriver() {
+    private DriverType determineDriver() {
         DriverType driverType = defaultDriver;
 
         try {
@@ -32,5 +40,32 @@ public class DriverFactory {
         }
 
         return driverType;
+    }
+
+    private void establishDriver(DesiredCapabilities desiredCapabilities) {
+        if (useRemoteWebDriver) {
+            URL seleniumGridURL = null;
+
+            try {
+                seleniumGridURL = new URL(System.getProperty("gridURL"));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+            String desiredBrowserVersion = System.getProperty("gridBrowserVersion");
+            String desiredPlatform = System.getProperty("gridPlatform");
+
+            if (null != desiredPlatform && !desiredPlatform.isEmpty()) {
+                desiredCapabilities.setPlatform(Platform.valueOf(desiredPlatform.toUpperCase()));
+            }
+
+            if (null != desiredBrowserVersion && !desiredBrowserVersion.isEmpty()) {
+                desiredCapabilities.setVersion(desiredBrowserVersion);
+            }
+
+            driver = new RemoteWebDriver(seleniumGridURL, desiredCapabilities);
+        } else {
+            driver = selectedDriver.getWebDriver(desiredCapabilities);
+        }
     }
 }

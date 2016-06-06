@@ -60,7 +60,11 @@ task testng(type: Test) {
 
     systemProperties = [
             browser: System.getProperty('browser', 'firefox'),
-            screenshotDirectory: System.getProperty('screenshotDirectory', "$buildDir/reports/screenshots")
+            screenshotDirectory: System.getProperty('screenshotDirectory', "$buildDir/reports/screenshots"),
+            remote: System.getProperty("remote", 'false'),
+            gridURL: System.getProperty("gridURL", ''),
+            gridPlatform: System.getProperty("gridPlatform", ''),
+            gridBrowserVersion: System.getProperty("gridBrowserVersion", ''),
     ]
 }
 
