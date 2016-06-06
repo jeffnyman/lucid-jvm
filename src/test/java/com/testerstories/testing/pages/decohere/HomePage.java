@@ -1,6 +1,6 @@
 package com.testerstories.testing.pages.decohere;
 
-import com.testerstories.testing.config.DriverFactory;
+import com.testerstories.testing.DriverBase;
 import com.testerstories.testing.helpers.Selenium;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -25,8 +25,8 @@ public class HomePage {
     public Authentication authentication = new Authentication();
 
     public HomePage() {
-        PageFactory.initElements(DriverFactory.getDriver(), this);
-        selenium = new Selenium(DriverFactory.getDriver());
+        PageFactory.initElements(DriverBase.getDriver(), this);
+        selenium = new Selenium(DriverBase.getDriver());
     }
 
     public void checkAvailable() {

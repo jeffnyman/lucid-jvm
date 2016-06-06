@@ -1,6 +1,6 @@
 package com.testerstories.testing.pages.decohere;
 
-import com.testerstories.testing.config.DriverFactory;
+import com.testerstories.testing.DriverBase;
 import com.testerstories.testing.config.Setting;
 import com.testerstories.testing.helpers.Selenium;
 import org.openqa.selenium.WebElement;
@@ -31,8 +31,8 @@ public class Authentication {
     private WebElement loginFormState;
 
     Authentication() {
-        PageFactory.initElements(DriverFactory.getDriver(), this);
-        selenium = new Selenium(DriverFactory.getDriver());
+        PageFactory.initElements(DriverBase.getDriver(), this);
+        selenium = new Selenium(DriverBase.getDriver());
     }
 
     public void logInAsAdmin() {

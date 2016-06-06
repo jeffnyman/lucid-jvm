@@ -1,16 +1,16 @@
 package com.testerstories.testing.checks.example;
 
-import com.testerstories.testing.config.DriverFactory;
+import com.testerstories.testing.DriverBase;
 import com.testerstories.testing.pages.example.LoginPage;
 import org.openqa.selenium.WebDriver;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LoginTest extends DriverFactory {
+public class LoginTest extends DriverBase {
     @Test
     private void login() {
-        WebDriver driver = DriverFactory.getDriver();
+        WebDriver driver = DriverBase.getDriver();
         driver.get("http://the-internet.herokuapp.com/login");
 
         LoginPage loginPage = new LoginPage();

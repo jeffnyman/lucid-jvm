@@ -1,6 +1,6 @@
 package com.testerstories.testing.pages.example;
 
-import com.testerstories.testing.config.DriverFactory;
+import com.testerstories.testing.DriverBase;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -19,7 +19,7 @@ public class LoginPage {
     private WebElement alert;
 
     public LoginPage() {
-        PageFactory.initElements(DriverFactory.getDriver(), this);
+        PageFactory.initElements(DriverBase.getDriver(), this);
     }
 
     public void logInAs(String user, String pass) {

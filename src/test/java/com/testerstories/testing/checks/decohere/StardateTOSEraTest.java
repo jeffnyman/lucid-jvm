@@ -1,6 +1,6 @@
 package com.testerstories.testing.checks.decohere;
 
-import com.testerstories.testing.config.DriverFactory;
+import com.testerstories.testing.DriverBase;
 import com.testerstories.testing.config.Setting;
 import com.testerstories.testing.pages.decohere.App;
 import com.testerstories.testing.pages.decohere.StardatePage;
@@ -9,7 +9,7 @@ import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StardateTOSEraTest extends DriverFactory {
+public class StardateTOSEraTest extends DriverBase {
     @BeforeMethod
     public void setUp() {
         String domain = Setting.useSetting("domain");

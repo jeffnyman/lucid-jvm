@@ -1,17 +1,15 @@
 package com.testerstories.testing.checks.decohere;
 
-import com.testerstories.testing.config.DriverFactory;
+import com.testerstories.testing.DriverBase;
 import com.testerstories.testing.config.Setting;
 import com.testerstories.testing.pages.decohere.App;
-import com.testerstories.testing.pages.decohere.HomePage;
-import com.testerstories.testing.pages.decohere.LandingPage;
 import com.testerstories.testing.pages.decohere.PlanetWeightPage;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PlanetWeightTest extends DriverFactory {
+public class PlanetWeightTest extends DriverBase {
     @BeforeMethod
     public void setup() {
         String domain = Setting.useSetting("domain");

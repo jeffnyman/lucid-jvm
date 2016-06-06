@@ -1,6 +1,6 @@
 package com.testerstories.testing.pages.decohere;
 
-import com.testerstories.testing.config.DriverFactory;
+import com.testerstories.testing.DriverBase;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -34,7 +34,7 @@ public class StardatePage {
     private WebElement calendarDate;
 
     public StardatePage() {
-        PageFactory.initElements(DriverFactory.getDriver(), this);
+        PageFactory.initElements(DriverBase.getDriver(), this);
     }
 
     public void verifyCalendarDateForTNGStardate(double value) {
