@@ -60,7 +60,7 @@ task testng(type: Test) {
     }
 
     testLogging {
-        showStandardStreams = true
+        events 'started', 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
     }
 
     systemProperties = [
