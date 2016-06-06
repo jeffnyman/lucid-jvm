@@ -39,6 +39,15 @@ task wrapper(type: Wrapper) {
 
 task testng(type: Test) {
     ignoreFailures = true
+
+    if (project.hasProperty('parallelForks'))
+        maxParallelForks = project.maxParallelForks as int
+    else
+        maxParallelForks = Runtime.runtime.availableProcessors() / 2
+
+    if (project.hasProperty('forkEvery'))
+        forkEvery = project.forkEvery as int
+
     useTestNG() {
         //includeGroups 'Smoke'
         //excludeGroups 'Integration'
@@ -50,7 +59,7 @@ task testng(type: Test) {
     }
 
     systemProperties = [
-            browser: System.getProperty('browser', 'firefox')
+            browser: System.getProperty('browser', 'firefox'),
     ]
 }
 
