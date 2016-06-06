@@ -66,10 +66,13 @@ task testng(type: Test) {
     systemProperties = [
             browser: System.getProperty('browser', 'firefox'),
             screenshotDirectory: System.getProperty('screenshotDirectory', "$buildDir/reports/screenshots"),
-            remote: System.getProperty("remote", 'false'),
-            gridURL: System.getProperty("gridURL", ''),
-            gridPlatform: System.getProperty("gridPlatform", ''),
-            gridBrowserVersion: System.getProperty("gridBrowserVersion", ''),
+            remote: System.getProperty('remote', 'false'),
+            gridURL: System.getProperty('gridURL', ''),
+            gridPlatform: System.getProperty('gridPlatform', ''),
+            gridBrowserVersion: System.getProperty('gridBrowserVersion', ''),
+            proxyEnabled: System.getProperty('proxyEnabled', 'false'),
+            proxyHost: System.getProperty('proxyHost', ''),
+            proxyPort: System.getProperty('proxyPort', '')
     ]
 }
 

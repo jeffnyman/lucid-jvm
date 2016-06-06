@@ -1,6 +1,7 @@
 package com.testerstories.testing.config;
 
 import org.openqa.selenium.Platform;
+import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -8,16 +9,30 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import static com.testerstories.testing.config.DriverType.FIREFOX;
+import static org.openqa.selenium.Proxy.ProxyType.MANUAL;
+
 public class DriverFactory {
     private WebDriver driver;
     private DriverType selectedDriver;
 
     private final boolean useRemoteWebDriver = Boolean.getBoolean("remote");
+    private final boolean proxyEnabled = Boolean.getBoolean("proxyEnabled");
+    private final String proxyHost = System.getProperty("proxyHost");
+    private final Integer proxyPort = Integer.getInteger("proxyPort");
+    private final String proxyDetails = String.format("%s:%d", proxyHost, proxyPort);
     private final String browser = System.getProperty("browser").toUpperCase();
-    private final DriverType defaultDriver = DriverType.FIREFOX;
+    private final DriverType defaultDriver = FIREFOX;
 
     public WebDriver getDriver() {
         if (null == driver) {
+            Proxy proxy = null;
+            if (proxyEnabled) {
+                proxy = new Proxy();
+                proxy.setProxyType(MANUAL);
+                proxy.setHttpProxy(proxyDetails);
+                proxy.setSslProxy(proxyDetails);
+            }
             selectedDriver = determineDriver();
             DesiredCapabilities desiredCapabilities = selectedDriver.getDesiredCapabilities();
             establishDriver(desiredCapabilities);
