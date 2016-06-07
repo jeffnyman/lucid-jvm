@@ -8,6 +8,40 @@ With the sixth commit, I believe I see some of the changes on the horizon. My fo
 
 ***
 
+## Test Philosophy
+
+The goal of this repository is to provide a focused Java-based automated checking solution. I say "automated checking" solution because even though I may still use the phrase "automated testing" from time to time, I believe that [automation is a technique, not testing](http://testerstories.com/2015/12/automation-is-a-technique-not-testing/).
+
+While it is true that automation is checking, not testing, it is also true that automated solutions can support testing. For this to be effective, however, it's important for there to be a philosophy that guides test thinking.
+
+My view is that testing is a design activity, not just an execution activity. To have quality assurance, you must have a shared understanding and expression of decisions related to quality. That shared understanding has to be empirical and demonstrable. That's being Lucid -- having a throughline of knowledge about all decisions that impact quality.
+
+What approaches like BDD have brought to the forefront are practices like "specification by example." These practices provide a way to help build confidence, first by expressing requirements in high-level business terms and then by automating these requirements in a way that provides a set of living documentation detailing both which requirements were requested and how they have been implemented. Moving forward, this living documentation provided by the automated specifications provides both a single source of truth about the application’s behavior and also a set of regression tests protecting it against unwanted change.
+
+However, this automation is sometimes approached first because people put more emphasis on automated checking rather than testing. So one thing I've learned is that one approach towards adopting "Lucid Testing" is by starting with functional automation and then gradually moving from testing after development to using executable specifications to guide development.
+
+What this means to me is that it's important to have a viable framework in place that supports the automation. This doesn't just mean having access to libraries or driver tools. It means figuring out what it means for code to be "Lucid" as well. That's one area that I'm hoping I can explore a bit in this repository.
+
+## Selenium API
+
+Selenium is not a testing tool. Selenium is an API that allows you to write code to drive a browser. This means Selenium is a browser automation tool, not a test tool and not even a checking tool. To drive this point home, Selenium has no means to check whether something it did succeeded or failed. That alone makes it useless as a testing tool. What this means is that you have to use assertion or expectation libraries to figure out if what you automated did something you expected.
+
+Selenium is a bit more than just an API. It is also a series of plugins, binaries, or native implementations that enable you to talk to the browser. The Selenium API talks to all of these implementation methods using the common wire protocol. This wire protocol is a RESTful web service that uses JSON over HTTP. The part of Selenium that commands are sent to using this wire protocol is called the RemoteWebDriver. All browser-specific driver implementations are extensions of that core RemoteWebDriver class.
+
+Selenium uses the WebDriver interface to provide a consistent means for automating actions with different browsers. WebDriver is an interface whose concrete implementation is done in two classes: RemoteWebDriver and HtmlUnitDriver.
+
+RemoteWebDriver is an implementation class of the WebDriver interface. The RemoteWebDriver server is a component that listens on a port for requests from a RemoteWebDriver client. Once those requests are received, it forwards them to browser-specific implementation: FirefoxDriver, ChromeDriver, etc.
+
+The language-binding client libraries serve as a RemoteWebDriver client. So if you execute tests locally, then the WebDriver client libraries talk to FirefoxDriver, ChromeDriver, etc directly. However, if you execute tests remotely, then the WebDriver client libraries talk to the RemoteWebDriver server.
+
+There are actually two modes to consider:
+
+* **Client mode** is where the RemoteWebDriver implementation is either loaded as a browser plugin (Safari) or natively supported by the browser (Firefox). The language bindings connect directly to the remote instance and tell it what to do.
+
+* **Server mode** is where the language binding sets up a server, which acts as a go-between for the language binding and the browser. It basically translates the commands sent by your code into something that the browser can understand. ChromeDriver is an example of this as is is the IEServerDriver.
+
+The main thing to understand is that the implementation method differs from driver to driver. Some use the client mode, and some use the server mode. The code that you have written using the WebDriver API is sent over to the browser via the RemoteWebDriver instance using the wire protocol.
+
 ## Polyglot Approach
 
 One of my initial goals in setting up this repository was to leverage the power of the JVM. I wanted to try using multiple languages in the same project and then use Gradle to orchestrate the build for the entire project. I wanted to use Gradle because I prefer its approach to that of the XML of Maven.
@@ -72,10 +106,6 @@ I will be using the AssertJ as my assertion library. A lot of people seem to lik
 I have a simple test of logging in for bot the Internet Examples (`InternetLoginTest`) and my Decohere login (`DecohereLoginTest`). I also have a test for my "weight on other planets" page (`PlanetWeightTest`).
 
 I don't want the logic for calling up a specific browser driver (like FirefoxDriver) in all of the tests, I also don't want it in the DriverFactory either. I want each driver type to be able to start up its own driver. But I don't necessarily know what drivers are going to be needed since that will be up to the user. So a class (`DriverType`) has to be used to manage these types. This management requires a certain set of methods and in order to ensure consistency of approach. As such it seems logical to have a `DriverType` class implement an interface (`DriverSetup`) to guarantee uniform implementation.
-
-The basic enum `DriverType` allows you to choose one of the default browsers supported by Selenium. Each enum entry implements a `getDesiredCapabilities()` method and a `getWebDriver()` method. This allows you to get a default set of capabilities for each browser. These capabilities can be extended, if required. These desired capabilities can then be used to instantiate a new WebDriver object when calling the `getWebDriver()` method.
-
-I use a [WebDriver Manager](https://github.com/bonigarcia/webdrivermanager) here. What this does is allow for the automatic downloading of browser drivers.
 
 ## Execution
 
